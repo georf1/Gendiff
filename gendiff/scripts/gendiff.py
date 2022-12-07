@@ -6,6 +6,7 @@ def main():
     parser = argparse.ArgumentParser(description='Compares two configuration files and shows a difference.')
     parser.add_argument('first_file', metavar='first_file', type=str, nargs=1)
     parser.add_argument('second_file', metavar='second_file', type=str, nargs=1)
+    parser.add_argument('-f', '--format', dest='FORMAT', action='store', help='set format of output')
 
     args = parser.parse_args()
     print(args.accumulate(args.integers))
