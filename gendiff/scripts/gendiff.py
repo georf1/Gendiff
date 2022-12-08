@@ -26,9 +26,7 @@ def discern_diff(path_to_first_file: str, path_to_second_file: str):
 
 
 def display_diff(diff: dict):
-    mapping = """
-    {
-    """
+    mapping = '{\n'
     
     for key in sorted(diff['removed'] | diff['added'] | diff['stayed'] | diff['changed']):
         if key in diff['removed']:
@@ -40,8 +38,10 @@ def display_diff(diff: dict):
             mapping += f'  + {key}: {diff["changed"][key][1]}\n'
         elif key in diff['stayed']:
             mapping += f'    {key}: {diff["stayed"][key]}\n'
+        
+    mapping += '}'
     
-    return mapping
+    return mapping.strip()
 
 
 def generate_diff(first_file=None, second_file=None):
