@@ -1,35 +1,12 @@
 #!/usr/bin/env python
 import argparse
 import json
-
+from gendiff.scripts.parse import get_diff
 
 DESCRIPTION = 'Compares two configuration files and shows a difference.'
 
 
-def discern_diff(path_to_first_file: str, path_to_second_file: str):
-    first_file = json.load(open(path_to_first_file))
-    second_file = json.load(open(path_to_second_file))
-    diff = {'removed': {},
-            'added': {},
-            'changed': {},
-            'stayed': {}
-            }
-
-    for key in sorted(first_file | second_file):
-        if first_file.get(key) is not None and second_file.get(key) is None:
-            diff['removed'].update({key: first_file[key]})
-        elif second_file.get(key) is not None and first_file.get(key) is None:
-            diff['added'].update({key: second_file[key]})
-        elif first_file.get(key) != second_file.get(key):
-            diff['changed'].update({key: [first_file[key], second_file[key]]})
-        elif second_file.get(key) is not None \
-                and second_file.get(key) == first_file.get(key):
-            diff['stayed'].update({key: second_file[key]})
-
-    return diff
-
-
-def display_diff(diff: dict):
+def display_diff(diff: dict) -> str:
     mapping = '{\n'
     keys = diff['removed'] | diff['added'] | diff['stayed'] | diff['changed']
 
@@ -51,7 +28,7 @@ def display_diff(diff: dict):
 
 def generate_diff(first_file=None, second_file=None):
     if first_file and second_file:
-        diff = discern_diff(first_file, second_file)
+        diff = get_diff(first_file, second_file)
         mapping = display_diff(diff)
 
         return mapping
@@ -63,7 +40,7 @@ def generate_diff(first_file=None, second_file=None):
                             action='store', help='set format of output')
 
         args = parser.parse_args()
-        diff = discern_diff(args.first_file, args.second_file)
+        diff = get_diff(args.first_file, args.second_file)
 
         mapping = display_diff(diff)
 
