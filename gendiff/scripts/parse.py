@@ -31,3 +31,4 @@ def get_diff(path_to_first_file: str, path_to_second_file: str):
             diff['stayed'].update({key: second_file[key]})
 
     return diff
+

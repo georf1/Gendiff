@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import argparse
-import json
 from gendiff.scripts.parse import get_diff
 
 DESCRIPTION = 'Compares two configuration files and shows a difference.'
