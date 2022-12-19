@@ -4,6 +4,8 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/b76ff6c0f189a574f63d/maintainability)](https://codeclimate.com/github/georf1/python-project-50/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/b76ff6c0f189a574f63d/test_coverage)](https://codeclimate.com/github/georf1/python-project-50/test_coverage)
 
+---
+
 ### Description:
 Gendiff compares two configuration files and shows a difference.
 
@@ -16,8 +18,6 @@ This project was built using these tools:
 | [pytest](https://pytest.org)                                                | "A mature full-featured Python testing tool"            |
 | [flake8](https://flake8.pycqa.org/en/latest/)                               | "Your Tool For Style Guide Enforcement"                 |
 | [pyyaml](https://pyyaml.org/)                                               | "Full-featured YAML framework for Python"               |
-
----
 
 ### ASCIINEMA:
 [![asciicast](https://asciinema.org/a/Ya2cz4HYhKop1k9zLs6kCbBKi.svg)](https://asciinema.org/a/Ya2cz4HYhKop1k9zLs6kCbBKi)
