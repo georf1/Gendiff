@@ -1,5 +1,5 @@
 def transform(value):
-    if value in ['true', 'false', 'null']:
+    if value in ['true', 'false', 'null'] or isinstance(value, int):
         return value
     return f"'{value}'"
 
