@@ -5,6 +5,7 @@ description = "Compares two configuration files and shows a difference."
 authors = ["Ruslan Zinnatov <rh26157@gmail.com>"]
 readme = "README.md"
 packages = [{include = "gendiff"}]
+repository = "https://github.com/georf1/python-project-50"
 
 [tool.poetry.dependencies]
 python = "^3.10"
