@@ -1,4 +1,4 @@
-from gendiff.scripts.gendiff import generate_diff
+from gendiff.generate_diff_engine import generate_diff
 
 
 correct_diff_stylish1 = open('tests/fixtures/diff1.txt').read()
