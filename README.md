@@ -19,5 +19,12 @@ This project was built using these tools:
 | [flake8](https://flake8.pycqa.org/en/latest/) | "^6.0.0"        | "Your Tool For Style Guide Enforcement"                 |
 | [pyyaml](https://pyyaml.org/)                 | "^6.0"          | "Full-featured YAML framework for Python"               |
 
+### Setup:
+To install use:
+> make install
+
+To build use:
+> make build
+
 ### ASCIINEMA:
 [![asciicast](https://asciinema.org/a/Ya2cz4HYhKop1k9zLs6kCbBKi.svg)](https://asciinema.org/a/Ya2cz4HYhKop1k9zLs6kCbBKi)
