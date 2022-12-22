@@ -5,9 +5,8 @@ from gendiff.generate_diff_engine import generate_diff
 
 def main():
     args = parse_args()
-    diff = generate_diff(args.first_file, args.second_file,
-                         args.FORMAT)
-    print(diff)
+    print(generate_diff(args.first_file, args.second_file,
+                        args.extension))
 
 
 if __name__ == '__main__':

@@ -3,13 +3,13 @@ import yaml
 
 
 def open_file(path_to_file):
-    file_name, format_ = path_to_file.split('.')
+    file_name, extension = path_to_file.split('.')
     with open(path_to_file) as file:
-        return load_file(file, format_)
+        return load_file(file, extension)
 
 
-def load_file(file, format_):
-    if format_ == 'json':
+def load_file(file, extension):
+    if extension.lower() == 'json':
         return json.load(file)
-    elif format_ == 'yaml' or 'yaml':
+    elif extension.lower() == 'yaml' or 'yaml':
         return yaml.load(file, Loader=yaml.Loader)

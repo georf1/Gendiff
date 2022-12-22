@@ -1,6 +1,14 @@
 def transform(value):
-    if value in ['true', 'false', 'null'] or isinstance(value, int):
+    if value in [True, False, None]:
+        if value is None:
+            return 'null'
+        return str(value).lower()
+
+    if isinstance(value, int):
         return value
+
+    if isinstance(value, dict):
+        return '[complex value]'
     return f"'{value}'"
 
 
@@ -8,31 +16,21 @@ def display_diff(diff):     # noqa: C901
     result = []
 
     def walk(data, path=''):
-        for x in data:
-            path += f".{x['key']}" if path else f"{x['key']}"
+        for inter_data in data:
+            path += f".{inter_data['key']}" if path else f"{inter_data['key']}"
 
-            if isinstance(x.get('value'), dict):
-                x['value'] = '[complex value]'
-            elif isinstance(x.get('value'), str):
-                x['value'] = transform(x['value'])
-
-            if x['status'] == 'nested':
-                walk(x['children'], path)
-            elif x['status'] == 'removed':
+            if inter_data['status'] == 'nested':
+                walk(inter_data['children'], path)
+            elif inter_data['status'] == 'removed':
                 result.append(f"Property '{path}' was removed")
-            elif x['status'] == 'added':
+            elif inter_data['status'] == 'added':
                 result.append(f"Property '{path}' was added "
-                              + f"with value: {x['value']}")
-            elif x['status'] == 'changed':
-                x['value'][0] = '[complex value]' \
-                    if isinstance(x.get('value')[0], dict) \
-                    else transform(x['value'][0])
-                x['value'][1] = '[complex value]' \
-                    if isinstance(x.get('value')[1], dict) \
-                    else transform(x['value'][1])
-
+                              + f"with value: {transform(inter_data['value'])}")
+            elif inter_data['status'] == 'changed':
                 result.append(f"Property '{path}' was updated. "
-                              + f"From {x['value'][0]} to {x['value'][1]}")
+                              + f"From {transform(inter_data['value'][0])} "
+                              + f"to {transform(inter_data['value'][1])}")
+
             path = '.'.join(path.split('.')[:-1])
     walk(diff)
     return '\n'.join(result)
