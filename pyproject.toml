@@ -6,6 +6,17 @@ authors = ["Ruslan Zinnatov <rh26157@gmail.com>"]
 readme = "README.md"
 packages = [{include = "gendiff"}]
 repository = "https://github.com/georf1/python-project-50"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Framework :: Flake8",
+    "Framework :: Pytest",
+    "Intended Audience :: Developers",
+    "License :: Freeware",
+    "Natural Language :: English",
+    "Operating System :: Unix",
+    "Programming Language :: Python :: 3.10"
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
