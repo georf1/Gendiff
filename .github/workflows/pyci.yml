@@ -1,4 +1,4 @@
-name: Python CI
+name: Tests and linter check
 
 on:
   - push
@@ -26,7 +26,7 @@ jobs:
       - name: Code Coverage
         uses: paambaati/codeclimate-action@v3.0.0
         env:
-          CC_TEST_REPORTER_ID: 35c7534faee1f07a1f58b10af9eacdf6d889d8badd61e8426fbaaeb33dc4da75
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
           coverageCommand: make test-coverage
           debug: true
