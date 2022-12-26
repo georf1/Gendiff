@@ -11,16 +11,11 @@ correct_diff_plain2 = open('tests/fixtures/diff4.txt').read()
 correct_diff_json = open('tests/fixtures/diff5.txt').read()
 
 
-@pytest.mark.parametrize("file1,file2,expected", [('tests/fixtures/file1.yaml', 'tests/fixtures/file2.yml', correct_diff_stylish1), ('tests/fixtures/file1.json', 'tests/fixtures/file2.json', correct_diff_stylish2)])
-def test_stylish(file1, file2, expected):
-    assert generate_diff(file1, file2) == expected
-
-
-@pytest.mark.parametrize("file1,file2,expected", [('tests/fixtures/file1.yaml', 'tests/fixtures/file2.yml', correct_diff_plain1), ('tests/fixtures/file1.json', 'tests/fixtures/file2.json', correct_diff_plain2)])
-def test_plain(file1, file2, expected):
-    assert generate_diff(file1, file2, 'plain') == expected
-
-
-def test_json():
-    diff = generate_diff('tests/fixtures/file1.json', 'tests/fixtures/file2.json', 'json')
-    assert diff == correct_diff_json
+@pytest.mark.parametrize("file1,file2,extension,expected", [
+    ('tests/fixtures/file1.yaml', 'tests/fixtures/file2.yml', 'stylish', correct_diff_stylish1),
+    ('tests/fixtures/file1.json', 'tests/fixtures/file2.json', 'stylish', correct_diff_stylish2),
+    ('tests/fixtures/file1.yaml', 'tests/fixtures/file2.yml', 'plain', correct_diff_plain1),
+    ('tests/fixtures/file1.json', 'tests/fixtures/file2.json', 'plain', correct_diff_plain2),
+    ('tests/fixtures/file1.json', 'tests/fixtures/file2.json', 'json', correct_diff_json)])
+def test_stylish(file1, file2, extension, expected):
+    assert generate_diff(file1, file2, extension) == expected
