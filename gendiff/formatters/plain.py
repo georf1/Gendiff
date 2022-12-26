@@ -1,4 +1,4 @@
-def transform(value):
+def to_str(value):
     if value in [True, False, None]:
         if value is None:
             return 'null'
@@ -15,21 +15,21 @@ def transform(value):
 def display_diff(diff):     # noqa: C901
     result = []
 
-    def walk(data, path=''):
-        for inter_data in data:
-            path += f".{inter_data['key']}" if path else f"{inter_data['key']}"
+    def walk(structure, path=''):
+        for data in structure:
+            path += f".{data['key']}" if path else f"{data['key']}"
 
-            if inter_data['status'] == 'nested':
-                walk(inter_data['children'], path)
-            elif inter_data['status'] == 'removed':
+            if data['status'] == 'nested':
+                walk(data['children'], path)
+            elif data['status'] == 'removed':
                 result.append(f"Property '{path}' was removed")
-            elif inter_data['status'] == 'added':
+            elif data['status'] == 'added':
                 result.append(f"Property '{path}' was added "
-                              + f"with value: {transform(inter_data['value'])}")
-            elif inter_data['status'] == 'changed':
+                              f"with value: {to_str(data['value'])}")
+            elif data['status'] == 'changed':
                 result.append(f"Property '{path}' was updated. "
-                              + f"From {transform(inter_data['value'][0])} "
-                              + f"to {transform(inter_data['value'][1])}")
+                              f"From {to_str(data['value'][0])} "
+                              f"to {to_str(data['value'][1])}")
 
             path = '.'.join(path.split('.')[:-1])
     walk(diff)
