@@ -12,53 +12,53 @@ def to_str(value):
 def display_diff(diff):     # noqa: C901
     result = ['{\n']
 
-    def walk(data, depth):
-        for x in data:
+    def walk(structure, depth):
+        for data in structure:
             spaces = (2 + depth) * ' '
             status = '  '
 
-            if x['status'] == 'removed':
+            if data['status'] == 'removed':
                 status = '- '
-            elif x['status'] == 'added':
+            elif data['status'] == 'added':
                 status = '+ '
 
-            if x['status'] == 'nested':
-                result.append(spaces + '  ' + f'{x["key"]}: ' + '{\n')
-                result.append(walk(x['children'], depth + 4))
-                result.append(spaces + '  ' + '}\n')
+            if data['status'] == 'nested':
+                result.append(f'{spaces}  {data["key"]}: {{\n')
+                result.append(walk(data['children'], depth + 4))
+                result.append(f'{spaces}  }}\n')
 
-            elif isinstance(x['value'], dict):
-                result.append(spaces + status + f'{x["key"]}: ' + '{\n')
-                result.append(walk(get_diff(x['value'], x['value']), depth + 4))
-                result.append(spaces + '  ' + '}\n')
+            elif isinstance(data['value'], dict):
+                result.append(f'{spaces}{status}{data["key"]}: {{\n')
+                result.append(walk(get_diff(data['value'], data['value']),
+                              depth + 4))
+                result.append(f'{spaces}  }}\n')
 
-            elif x['status'] == 'changed':
-                if isinstance(x['value'][0], dict):
-                    inter_diff = get_diff(x['value'][0], x['value'][0])
+            elif data['status'] == 'changed':
+                if isinstance(data['value'][0], dict):
+                    inner_diff = get_diff(data['value'][0], data['value'][0])
 
-                    result.append(spaces + '- ' + f'{x["key"]}: ' + '{\n')
-                    result.append(walk(inter_diff, depth + 4))
-                    result.append(spaces + '  ' + '}\n')
-                    result.append(spaces + '+ '
-                                  + f'{x["key"]}: {to_str(x["value"][1])}\n')
-                elif isinstance(x['value'][1], dict):
-                    inter_diff = get_diff(x['value'][1], x['value'][1])
+                    result.append(f'{spaces}- {data["key"]}: {{\n')
+                    result.append(walk(inner_diff, depth + 4))
+                    result.append(f'{spaces}  }}\n')
+                    result.append(f'{spaces}+ {data["key"]}: '
+                                  f'{to_str(data["value"][1])}\n')
+                elif isinstance(data['value'][1], dict):
+                    inner_diff = get_diff(data['value'][1], data['value'][1])
 
-                    result.append(spaces + '- '
-                                  + f'{x["key"]}: {to_str(x["value"][0])}\n')
-                    result.append(spaces + '+ ' + f'{x["key"]}: ' + '{\n')
-                    result.append(walk(inter_diff, depth + 4))
-                    result.append(spaces + '  ' + '}\n')
+                    result.append(f'{spaces}- {data["key"]}: '
+                                  f'{to_str(data["value"][0])}\n')
+                    result.append(f'{spaces}+ {data["key"]}: {{\n')
+                    result.append(walk(inner_diff, depth + 4))
+                    result.append(f'{spaces}  }}\n')
                 else:
-                    result.append(spaces + '- '
-                                  + f'{x["key"]}: {to_str(x["value"][0])}\n')
-                    result.append(spaces + '+ '
-                                  + f'{x["key"]}: {to_str(x["value"][1])}\n')
+                    result.append(f'{spaces}- {data["key"]}: '
+                                  f'{to_str(data["value"][0])}\n')
+                    result.append(f'{spaces}+ {data["key"]}: '
+                                  f'{to_str(data["value"][1])}\n')
 
             else:
-                result.append(spaces + status
-                              + f'{x["key"]}: {to_str(x["value"])}\n')
-
+                result.append(f'{spaces}{status}{data["key"]}: '
+                              f'{to_str(data["value"])}\n')
         return ''
 
     walk(diff, 0)
