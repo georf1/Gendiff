@@ -19,7 +19,7 @@ This project was built using these tools:
 | [flake8](https://flake8.pycqa.org/en/latest/) | "^6.0.0"        | "Your Tool For Style Guide Enforcement"                 |
 | [pyyaml](https://pyyaml.org/)                 | "^6.0"          | "Full-featured YAML framework for Python"               |
 
-### Setup:
+### Commands:
 To install use:
 > make install
 
